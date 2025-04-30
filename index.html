@@ -89,10 +89,10 @@
     .letter {
       display: none;
       position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'), linear-gradient(to bottom, #70a1ff, #4b79a1); /* Background xanh biển với mây */
+      top: 50%; /* Căn giữa theo chiều dọc */
+      left: 50%; /* Căn giữa theo chiều ngang */
+      transform: translate(-50%, -50%); /* Dịch tâm cả 2 trục */
+      background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'), linear-gradient(to bottom, #70a1ff, #4b79a1);
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -104,7 +104,7 @@
       opacity: 0;
       animation: showLetter 3s forwards;
       border: 5px solid transparent;
-      border-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dove_white_bird.svg/600px-Dove_white_bird.svg.png') 30 stretch; /* Viền là chim bồ câu */
+      border-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dove_white_bird.svg/600px-Dove_white_bird.svg.png') 30 stretch;
       background-size: cover;
     }
 
