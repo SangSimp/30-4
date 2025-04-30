@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chúc Mừng Ngày 30/4</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 12vh;
+      font-size: 3.5em;
+      color: #FFD700;
+      text-shadow: 0 0 20px red, 0 0 30px yellow;
+      animation: pulse 2s infinite;
+      position: relative;
+      z-index: 5;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    /* 🇻🇳 Cờ đỏ-xanh với ngôi sao */
+    .flag-center {
+      margin: 30px auto 0;
+      width: 240px;
+      height: 160px;
+      border: 2px solid white;
+      box-shadow: 0 0 15px yellow;
+      animation: wave 2s infinite ease-in-out;
+      transform-origin: left center;
+      overflow: hidden;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .half {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      left: 0;
+      z-index: 1;
+    }
+
+    .top {
+      top: 0;
+      background-color: red;
+    }
+
+    .bottom {
+      bottom: 0;
+      background-color: #005bbb;
+    }
+
+    .star {
+      font-size: 100px;
+      color: yellow;
+      filter: drop-shadow(0 0 4px yellow);
+      z-index: 2;
+    }
+
+    @keyframes wave {
+      0% { transform: perspective(600px) rotateY(0deg); }
+      50% { transform: perspective(600px) rotateY(4deg); }
+      100% { transform: perspective(600px) rotateY(0deg); }
+    }
+
+    /* Thư chúc mừng */
+    .letter {
+      display: none;
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'), linear-gradient(to bottom, #70a1ff, #4b79a1); /* Background xanh biển với mây */
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+      font-size: 1.3em;
+      color: #333;
+      z-index: 4;
+      opacity: 0;
+      animation: showLetter 3s forwards;
+      border: 5px solid transparent;
+      border-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dove_white_bird.svg/600px-Dove_white_bird.svg.png') 30 stretch; /* Viền là chim bồ câu */
+      background-size: cover;
+    }
+
+    @keyframes showLetter {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    /* Hiệu ứng cuộn chữ */
+    .scrolling-text {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #FFD700;
+      border-radius: 10px;
+      background-color: white;
+      color: black;
+      font-size: 1.2em;
+      line-height: 1.8;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: left;
+    }
+
+    .scrolling-text p {
+      animation: scrollText 20s linear infinite;
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateY(100%); }
+      100% { transform: translateY(-100%); }
+    }
+
+    /* Nút tắt thư */
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 1.5em;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .close-button:hover {
+      background-color: #c0392b;
+    }
+
+    /* Nút nhạc */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: #2980b9;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- 🎆 Pháo hoa -->
+<canvas id="fireworks"></canvas>
+
+<!-- 🎉 Tiêu đề -->
+<h1> Chúc Mừng Ngày Giải Phóng Miền Nam 30/4 </h1>
+
+<!-- 🇻🇳 Lá cờ đỏ-xanh nằm giữa dưới chữ -->
+<div class="flag-center" onclick="showLetter()">
+  <div class="half top"></div>
+  <div class="half bottom"></div>
+  <div class="star">★</div>
+</div>
+
+<!-- Thư chúc mừng -->
+<div class="letter" id="letter">
+  <!-- Nút tắt thư -->
+  <button class="close-button" onclick="closeLetter()">X</button>
+  <div class="scrolling-text">
+    <p>Chúc Mừng Ngày Giải Phóng Miền Nam 30/4!  Đây là ngày để chúng ta kỷ niệm sự hy sinh và sự đoàn kết của dân tộc. Chúc đất nước ngày càng phát triển và thịnh vượng!<br><br> Hãy cùng nhau hướng về tương lai, vun đắp cho thế hệ mai sau, để đất nước luôn mạnh mẽ và hùng cường.</p>
+  </div>
+</div>
+
+<!-- 🔊 Nhạc nền -->
+<div class="controls">
+  <button onclick="toggleMusic()">🎵 Bật/Tắt Nhạc</button>
+</div>
+<audio id="bgmusic" loop>
+  <source src="MauDoDaVang-DTAPERIK-7121000.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const canvas = document.getElementById('fireworks');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const music = document.getElementById('bgmusic');
+  function toggleMusic() {
+    if (music.paused) music.play();
+    else music.pause();
+  }
+
+  const fireworks = [];
+
+  class Firework {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.targetY = Math.random() * canvas.height / 2;
+      this.speed = 5 + Math.random() * 4;
+      this.radius = 2;
+      this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      this.exploded = false;
+      this.particles = [];
+    }
+
+    update() {
+      if (!this.exploded) {
+        this.y -= this.speed;
+        if (this.y <= this.targetY) {
+          this.exploded = true;
+          for (let i = 0; i < 80; i++) {
+            this.particles.push(new Particle(this.x, this.y, this.color));
+          }
+        }
+      } else {
+        this.particles.forEach(p => p.update());
+      }
+    }
+
+    draw() {
+      if (!this.exploded) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      } else {
+        this.particles.forEach(p => p.draw());
+      }
+    }
+  }
+
+  class Particle {
+    constructor(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.speedX = (Math.random() - 0.5) * 8;
+      this.speedY = (Math.random() - 0.5) * 8;
+      this.life = 100;
+      this.color = color;
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life--;
+    }
+
+    draw() {
+      if (this.life > 0) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+  }
+
+  function animate() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (Math.random() < 0.05) {
+      fireworks.push(new Firework());
+    }
+    fireworks.forEach((fw, index) => {
+      fw.update();
+      fw.draw();
+      if (fw.exploded && fw.particles.every(p => p.life <= 0)) {
+        fireworks.splice(index, 1);
+      }
+    });
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Hiển thị lá thư khi click vào lá cờ
+  function showLetter() {
+    document.getElementById('letter').style.display = 'block';
+  }
+
+  // Đóng lá thư khi click vào nút "X"
+  function closeLetter() {
+    document.getElementById('letter').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
